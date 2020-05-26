@@ -8,7 +8,13 @@ export type NewsType = {
 
 export type initialNewsState = {
   news: NewsType[];
+};
+
+export type LoadingStateType = {
   loading: boolean;
+};
+
+export type ErrorType = {
   isError: boolean;
   errorMessage: string;
 };

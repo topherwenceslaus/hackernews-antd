@@ -7,51 +7,32 @@ import {
   AppActions
 } from "../types/actionTypes";
 
-export const initialState: initialNewsState = {
+export const initialState = {
   news: [],
   loading: false,
   isError: false,
   errorMessage: ""
 };
 
-export const newsReducer = (state = initialState, action: AppActions) => {
-  console.log(action.type);
+const newsReducer = (state = initialState, action: AppActions) => {
   switch (action.type) {
-    case FETCH_NEWS: {
-      return {
-        ...state,
-        loading: true
-      };
-    }
     case FRONT_PAGE: {
       return {
         ...state,
-        news: action.news,
-        loading: false,
-        isError: false,
-        errorMessage: ""
+        news: action.news
       };
     }
     case SEARCH_NEWS: {
       return {
         ...state,
-        news: action.news,
-        loading: false,
-        isError: false,
-        errorMessage: ""
+        news: action.news
       };
     }
 
-    case API_FAILURE: {
-      return {
-        ...state,
-        loading: false,
-        isError: true,
-        errorMessage: action.errorMessage
-      };
-    }
     default: {
       return state;
     }
   }
 };
+
+export default newsReducer;

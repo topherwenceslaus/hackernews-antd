@@ -1,6 +1,7 @@
 import React, { FC, ReactElement } from "react";
 
-import { initialState, newsReducer } from "./reducers/newsReducer";
+import rootReducer from "./reducers/";
+import { initialState } from "./reducers/newsReducer";
 import { Front_Page_Endpoint } from "./constants";
 import {
   FRONT_PAGE,
@@ -19,7 +20,7 @@ type Iprops = {
 };
 
 const AppState: FC<Iprops> = ({ children }) => {
-  const [state, dispatch] = React.useReducer(newsReducer, initialState);
+  const [state, dispatch] = React.useReducer(rootReducer, initialState);
 
   React.useEffect(() => {
     try {
