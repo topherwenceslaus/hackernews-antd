@@ -5,10 +5,13 @@ import App from "./components/App";
 import "antd/dist/antd.css";
 import "./styles.css";
 
+import { BrowserRouter as Router } from "react-router-dom";
 const rootElement = document.getElementById("root");
 render(
   <AppState>
-    <App />
+    <Router>
+      <App />
+    </Router>
   </AppState>,
   rootElement
 );

@@ -1,14 +1,15 @@
-import React, { FC, ReactElement } from "react";
+import React, { FC, ReactElement, useEffect } from "react";
 
 import rootReducer from "./reducers/";
 import { initialState } from "./reducers/newsReducer";
-import { Front_Page_Endpoint } from "./constants";
 import {
   FRONT_PAGE,
   API_FAILURE,
   FETCH_NEWS,
   AppActions
 } from "./types/actionTypes";
+
+import { useFetch } from "./hooks";
 
 export const NewsContext = React.createContext({
   state: initialState,
@@ -21,40 +22,27 @@ type Iprops = {
 
 const AppState: FC<Iprops> = ({ children }) => {
   const [state, dispatch] = React.useReducer(rootReducer, initialState);
+  const { news, error } = useFetch();
 
-  React.useEffect(() => {
-    try {
-      const fetchFrontPageNews = async () => {
-        dispatch({
-          type: FETCH_NEWS
-        });
+  useEffect(() => {
+    dispatch({
+      type: FETCH_NEWS
+    });
 
-        const news = await fetch(Front_Page_Endpoint)
-          .then(data => data.json())
-          .then(data => data.hits)
-          .catch(e => {
-            dispatch({
-              type: API_FAILURE,
-              errorMessage: e.message || "Something went wrong"
-            });
-          });
-
-        if (news) {
-          dispatch({
-            type: FRONT_PAGE,
-            news: news
-          });
-        }
-      };
-
-      fetchFrontPageNews();
-    } catch (e) {
+    if (news.length > 0) {
       dispatch({
-        type: API_FAILURE,
-        errorMessage: e.message || "Something went wrong"
+        type: FRONT_PAGE,
+        news: news
       });
     }
-  }, []);
+
+    if (error) {
+      dispatch({
+        type: API_FAILURE,
+        errorMessage: "Something went wrong"
+      });
+    }
+  }, [news, error]);
 
   return (
     <NewsContext.Provider value={{ state, dispatch }}>

@@ -1,11 +1,4 @@
-import { initialNewsState } from "../types/types";
-import {
-  FRONT_PAGE,
-  SEARCH_NEWS,
-  API_FAILURE,
-  FETCH_NEWS,
-  AppActions
-} from "../types/actionTypes";
+import { FRONT_PAGE, SEARCH_NEWS, AppActions } from "../types/actionTypes";
 
 export const initialState = {
   news: [],
